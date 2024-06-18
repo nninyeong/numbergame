@@ -102,6 +102,14 @@
         }
     </style>
     <script>
+        function initGame() {
+            $('#userinput').val("");
+            $('#userinput').attr("placeholder", "시작버튼을 눌러주세요!");
+            $('#userinput').attr("disabled", true);
+            $('#submitbutton').attr("disabled", true);
+            $('#answer').empty();
+        }
+
         const MIN_NUMBER = 1000;
         const MAX_NUMBER = 9999;
 
@@ -110,8 +118,6 @@
             answer = Math.floor(Math.random() * (MAX_NUMBER - MIN_NUMBER + 1) + MIN_NUMBER);
             $('#number').text(answer);
             $('#userinput').attr("placeholder", "숫자를 외우세요!");
-            $('#answer').empty();
-            $('#submitbutton').attr("disabled", true);
             setTimeout(hideAnswer, 3000);
         }
 
@@ -124,8 +130,6 @@
 
         let userInput = 0;
         function checkanswer() {
-            $('#userinput').attr("placeholder", "시작버튼을 눌러주세요!");
-            
             userInput = $('#userinput').val();
             if (userInput == answer) {
                 $('#answer').text("정답입니다!");
@@ -134,9 +138,9 @@
                 $('#answer').text(`오답입니다! 정답은 ${answer}입니다.`);
             }
 
+            // 2초 뒤 게임 초기화
+            setTimeout(initGame, 2000);
         }
-
-
     </script>
 </head>
 
@@ -151,7 +155,7 @@
         <div class="inputcontainer">
             <input type="text" id="userinput" placeholder="시작버튼을 눌러주세요!" disabled>
             <button id="startbutton" onclick="showNumber()">시작</button>
-            <button id="submitbutton" onclick="checkanswer()">제출</button disabled>
+            <button id="submitbutton" onclick="checkanswer()" disabled>제출</button>
         </div>
         <div class="answercontainer">
             <h2 id="answer"></h2>
