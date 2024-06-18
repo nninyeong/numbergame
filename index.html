@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>숫자기억게임 만들기</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@100..900&family=Moirai+One&family=Nanum+Gothic&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@100..900&family=Moirai+One&family=Nanum+Gothic&family=Noto+Sans+KR:wght@100..900&display=swap');
+
+        .moirai-one-regular {
+            font-family: "Moirai One", system-ui;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            border: none;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            background-color: lightgrey;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            font-family: "Noto Sans KR", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .mainbox {
+            background-color: white;
+            width: 40%;
+            height: 30%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .title {
+            font-size: 150%;
+            width: 300px;
+            margin: 40px auto 0px auto;
+        }
+
+        .inputcontainer {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            height: 25%;
+            margin: 20px 30px 0px 30px;
+        }
+
+        .inputcontainer>input {
+            height: 30px;
+            width: 50%;
+            border: 1px solid black;
+            border-radius: 3px;
+            padding-left: 10px;
+            margin-right: 10px;
+        }
+
+        .inputcontainer>button {
+            margin-right: 10px;
+            height: 30px;
+            width: 10%;
+
+            border: 1px solid black;
+            border-radius: 3px;
+
+            background-color: lightgrey;
+
+            font-weight: bold;
+        }
+
+        .numbercontainer {
+            width: 300px;
+            margin: 10px auto 0 auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .answercontainer>#answer {
+            text-align: center;
+            margin: 10px auto 0 auto;
+
+        }
+    </style>
+    <script>
+        const MIN_NUMBER = 1000;
+        const MAX_NUMBER = 9999;
+
+        let answer = 0;
+        function showNumber() {
+            answer = Math.floor(Math.random() * (MAX_NUMBER - MIN_NUMBER + 1) + MIN_NUMBER);
+            $('#number').text(answer);
+            $('#userinput').attr("placeholder", "숫자를 외우세요!");
+            $('#answer').empty();
+            $('#submitbutton').attr("disabled", true);
+            setTimeout(hideAnswer, 3000);
+        }
+
+        function hideAnswer() {
+            $('#number').empty();
+            $('#userinput').attr("disabled", false);
+            $('#submitbutton').attr("disabled", false);
+            $('#userinput').attr("placeholder", "정답을 입력해주세요!");
+        }
+
+        let userInput = 0;
+        function checkanswer() {
+            $('#userinput').attr("placeholder", "시작버튼을 눌러주세요!");
+            
+            userInput = $('#userinput').val();
+            if (userInput == answer) {
+                $('#answer').text("정답입니다!");
+            }
+            else {
+                $('#answer').text(`오답입니다! 정답은 ${answer}입니다.`);
+            }
+
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <div class="mainbox">
+        <div class="title moirai-one-regular">
+            <h1>숫자기억게임</h1>
+        </div>
+        <div class="numbercontainer">
+            <h2 id="number">????</h2>
+        </div>
+        <div class="inputcontainer">
+            <input type="text" id="userinput" placeholder="시작버튼을 눌러주세요!" disabled>
+            <button id="startbutton" onclick="showNumber()">시작</button>
+            <button id="submitbutton" onclick="checkanswer()">제출</button disabled>
+        </div>
+        <div class="answercontainer">
+            <h2 id="answer"></h2>
+        </div>
+    </div>
+</body>
+
+</html>
