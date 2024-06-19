@@ -100,25 +100,43 @@
             margin: 10px auto 0 auto;
 
         }
+
+        .countdown {
+            color: rgb(255, 48, 48);
+            text-align: center;
+            margin: 5px auto 0px auto;
+        }
     </style>
     <script>
+        const TIME_LIMIT = 3;
+        let lefttime;
+        let countdownTimer;
+        function initTimer() {
+            lefttime = TIME_LIMIT;
+            $('#lefttime').text(lefttime);
+            clearInterval(countdownTimer);
+        }
+
         function initGame() {
             $('#userinput').val("");
             $('#userinput').attr("placeholder", "시작버튼을 눌러주세요!");
             $('#userinput').attr("disabled", true);
             $('#submitbutton').attr("disabled", true);
             $('#answer').empty();
+            initTimer();
         }
 
         const MIN_NUMBER = 1000;
         const MAX_NUMBER = 9999;
 
         let answer = 0;
-        function showNumber() {
+        function start() {
+            initGame();
+            $('#lefttime').attr("hidden", false);
             answer = Math.floor(Math.random() * (MAX_NUMBER - MIN_NUMBER + 1) + MIN_NUMBER);
             $('#number').text(answer);
             $('#userinput').attr("placeholder", "숫자를 외우세요!");
-            setTimeout(hideAnswer, 3000);
+            countdownTimer = setInterval(countdown, 1000);
         }
 
         function hideAnswer() {
@@ -141,6 +159,17 @@
             // 2초 뒤 게임 초기화
             setTimeout(initGame, 2000);
         }
+
+        function countdown() {
+            lefttime --;
+            $('#lefttime').text(lefttime);
+
+            if(lefttime <= 0) {
+                clearInterval(countdownTimer);
+                $('#lefttime').attr("hidden", true);
+                hideAnswer();
+            }
+        }
     </script>
 </head>
 
@@ -150,11 +179,14 @@
             <h1>숫자기억게임</h1>
         </div>
         <div class="numbercontainer">
-            <h2 id="number">????</h2>
+            <h2 id="number"></h2>
+        </div>
+        <div class="countdown">
+            <h2 id="lefttime" hidden></h2>
         </div>
         <div class="inputcontainer">
             <input type="text" id="userinput" placeholder="시작버튼을 눌러주세요!" disabled>
-            <button id="startbutton" onclick="showNumber()">시작</button>
+            <button id="startbutton" onclick="start()">시작</button>
             <button id="submitbutton" onclick="checkanswer()" disabled>제출</button>
         </div>
         <div class="answercontainer">
