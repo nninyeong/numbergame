@@ -115,14 +115,13 @@
         let lefttime;
         let countdownTimer;
         function initTimer() {
-            // clearTimeout(resetTimer);
+            clearTimeout(resetTimer);
             lefttime = TIME_LIMIT;
             $('#lefttime').text(lefttime);
             clearInterval(countdownTimer);
         }
 
         function initGame() {
-            // clearTimeout(resetTimer);
             initTimer();
             $('#userinput').val("");
             $('#userinput').attr("placeholder", "시작버튼을 눌러주세요!");
