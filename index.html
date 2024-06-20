@@ -46,12 +46,17 @@
             height: 30%;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .title {
-            font-size: 150%;
+            text-align: center;
+            font-size: 1.5rem;
             width: 300px;
-            margin: 40px auto 0px auto;
         }
 
         .inputcontainer {
@@ -60,8 +65,8 @@
             justify-content: center;
             align-items: center;
 
+            width: 500px;
             height: 25%;
-            margin: 20px 30px 0px 30px;
         }
 
         .inputcontainer>input {
@@ -88,7 +93,6 @@
 
         .numbercontainer {
             width: 300px;
-            margin: 10px auto 0 auto;
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -104,7 +108,6 @@
         .countdown {
             color: rgb(255, 48, 48);
             text-align: center;
-            margin: 5px auto 0px auto;
         }
     </style>
     <script>
@@ -112,18 +115,20 @@
         let lefttime;
         let countdownTimer;
         function initTimer() {
+            // clearTimeout(resetTimer);
             lefttime = TIME_LIMIT;
             $('#lefttime').text(lefttime);
             clearInterval(countdownTimer);
         }
 
         function initGame() {
+            // clearTimeout(resetTimer);
+            initTimer();
             $('#userinput').val("");
             $('#userinput').attr("placeholder", "시작버튼을 눌러주세요!");
             $('#userinput').attr("disabled", true);
             $('#submitbutton').attr("disabled", true);
             $('#answer').empty();
-            initTimer();
         }
 
         const MIN_NUMBER = 1000;
@@ -147,6 +152,7 @@
         }
 
         let userInput = 0;
+        let resetTimer;
         function checkanswer() {
             userInput = $('#userinput').val();
             if (userInput == answer) {
@@ -157,7 +163,7 @@
             }
 
             // 2초 뒤 게임 초기화
-            setTimeout(initGame, 2000);
+            resetTimer = setTimeout(initGame, 2000);
         }
 
         function countdown() {
